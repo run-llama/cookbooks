@@ -1,0 +1,2 @@
+nbconvert>=7.1.0
+tqdm==4.67.1

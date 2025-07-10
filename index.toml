@@ -1,0 +1,18 @@
+[config]
+layout = "recipe"
+toc = true
+colab = "https://colab.research.google.com/github/TuanaCelik/cookbooks-demo/blob/main/"
+
+[[recipe]]
+title = "Agent Workflow + Research Assistant using AgentQL"
+notebook = "notebooks/agent/agent_workflow_research_assistant.ipynb"
+tags = ["Agent", "Websearch", "Integrations"]
+description = "Build a research assistant using AgentWorlflow and websearch tools"
+experimental = true
+
+[[recipe]]
+title = "Custom Planning Multi-Agent System"
+notebook = "notebooks/agent/custom_multi_agent.ipynb"
+tags = ["Agent"]
+description = "Build a research agent that writes and refines reports with a multi-agent structure."
+featured = true
