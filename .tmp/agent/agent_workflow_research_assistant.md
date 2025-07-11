@@ -1,6 +1,6 @@
 ---
 layout: recipe
-colab: https://colab.research.google.com/github/TuanaCelik/cookbooks-demo/blob/main/('notebooks/agent/agent_workflow_research_assistant.ipynb',)
+colab: https://colab.research.google.com/github/TuanaCelik/cookbooks-demo/blob/main/notebooks/agent/agent_workflow_research_assistant.ipynb
 toc: True
 title: "Agent Workflow + Research Assistant using AgentQL"
 featured: False

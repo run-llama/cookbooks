@@ -1,6 +1,6 @@
 ---
 layout: recipe
-colab: https://colab.research.google.com/github/TuanaCelik/cookbooks-demo/blob/main/('notebooks/agent/custom_multi_agent.ipynb',)
+colab: https://colab.research.google.com/github/TuanaCelik/cookbooks-demo/blob/main/notebooks/agent/custom_multi_agent.ipynb
 toc: True
 title: "Custom Planning Multi-Agent System"
 featured: True

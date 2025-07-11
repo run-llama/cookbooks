@@ -267,7 +267,7 @@ def convert_notebooks(index_data):
         notebook_info = {
             "file": Path(recipe_data["notebook"]),
             "title": recipe_data["title"],
-            "colab": f"{colab_base_url.rstrip('/')}/{recipe_data["notebook"],}",
+            "colab": f"{colab_base_url.rstrip('/')}/{recipe_data["notebook"]}",
             "featured": recipe_data.get("featured", False),
             "experimental": recipe_data.get("experimental", False),
             "tags": recipe_data.get("tags", []),
