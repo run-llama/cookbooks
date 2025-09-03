@@ -1,7 +1,7 @@
 [config]
 layout = "recipe"
 toc = true
-colab = "https://colab.research.google.com/github/TuanaCelik/cookbooks-demo/blob/main/"
+colab = "https://colab.research.google.com/github/run-llama/cookbooks-demo/blob/main/"
 
 [[recipe]]
 title = "Agent Workflow + Research Assistant using AgentQL"
@@ -9,6 +9,8 @@ notebook = "notebooks/agent/agent_workflow_research_assistant.ipynb"
 tags = ["Agent", "Websearch", "Integrations"]
 description = "Build a research assistant using AgentWorlflow and websearch tools"
 experimental = true
+featured = true
+language = "py"
 
 [[recipe]]
 title = "Custom Planning Multi-Agent System"
@@ -16,3 +18,201 @@ notebook = "notebooks/agent/custom_multi_agent.ipynb"
 tags = ["Agent"]
 description = "Build a research agent that writes and refines reports with a multi-agent structure."
 featured = true
+language = "py"
+
+[[recipe]]
+title = "Parsing Documents with Instructions"
+source = "https://github.com/run-llama/llama_cloud_services/blob/main/examples/parse/parsing_instructions/parsing_instructions.ipynb"
+tags = ["LlamaParse"]
+description = "Parse documents with additional instructions"
+featured = true
+language = "py"
+
+[[recipe]]
+title = "Agent Builder"
+notebook = "notebooks/agent/agent_builder.ipynb"
+tags = ["Agent"]
+description = "Create and configure agents with custom tools and capabilities"
+language = "py"
+
+[[recipe]]
+title = "Basic Agent Workflow"
+notebook = "notebooks/agent/agent_workflow_basic.ipynb"
+tags = ["Agent"]
+description = "Get started with basic agent workflows and tool usage"
+language = "py"
+
+[[recipe]]
+title = "Multi-Agent Workflow"
+notebook = "notebooks/agent/agent_workflow_multi.ipynb"
+tags = ["Agent"]
+description = "Build complex workflows with multiple collaborating agents"
+language = "py"
+
+[[recipe]]
+title = "Anthropic Claude Agent"
+notebook = "notebooks/agent/anthropic_agent.ipynb"
+tags = ["Agent", "Integrations"]
+description = "Use Anthropic's Claude model as an agent with tools"
+language = "py"
+
+[[recipe]]
+title = "AWS Bedrock Converse Agent"
+notebook = "notebooks/agent/bedrock_converse_agent.ipynb"
+tags = ["Agent", "Integrations"]
+description = "Integrate AWS Bedrock Converse with agent workflows"
+language = "py"
+
+[[recipe]]
+title = "Code Act Agent"
+notebook = "notebooks/agent/code_act_agent.ipynb"
+tags = ["Agent"]
+description = "Build agents that can write and execute code"
+language = "py"
+
+[[recipe]]
+title = "From Scratch Code Act Agent"
+notebook = "notebooks/agent/from_scratch_code_act_agent.ipynb"
+tags = ["Agent"]
+description = "Create a code-writing agent from the ground up"
+language = "py"
+
+[[recipe]]
+title = "Mistral Agent"
+notebook = "notebooks/agent/mistral_agent.ipynb"
+tags = ["Agent", "Integrations"]
+description = "Use Mistral AI models as agents with tool integration"
+language = "py"
+
+[[recipe]]
+title = "NVIDIA Agent"
+notebook = "notebooks/agent/nvidia_agent.ipynb"
+tags = ["Agent", "Integrations"]
+description = "Integrate NVIDIA AI models with agent workflows"
+language = "py"
+
+[[recipe]]
+title = "NVIDIA Document Research Assistant"
+notebook = "notebooks/agent/nvidia_document_research_assistant_for_blog_creation.ipynb"
+tags = ["Agent", "Integrations"]
+description = "Create a document research assistant for blog content generation"
+language = "py"
+
+[[recipe]]
+title = "NVIDIA Sub-Question Query Engine"
+notebook = "notebooks/agent/nvidia_sub_question_query_engine.ipynb"
+tags = ["Agent", "Integrations"]
+description = "Build a query engine that breaks complex questions into sub-questions"
+language = "py"
+
+[[recipe]]
+title = "OpenAI Agent with Context Retrieval"
+notebook = "notebooks/agent/openai_agent_context_retrieval.ipynb"
+tags = ["Agent", "Integrations"]
+description = "Use OpenAI agents with advanced context retrieval capabilities"
+language = "py"
+
+[[recipe]]
+title = "OpenAI Agent with Lengthy Tools"
+notebook = "notebooks/agent/openai_agent_lengthy_tools.ipynb"
+tags = ["Agent", "Integrations"]
+description = "Handle complex tools and long-running operations with OpenAI agents"
+language = "py"
+
+[[recipe]]
+title = "OpenAI Agent Query Cookbook"
+notebook = "notebooks/agent/openai_agent_query_cookbook.ipynb"
+tags = ["Agent", "Integrations"]
+description = "Comprehensive guide to OpenAI agent query patterns and best practices"
+language = "py"
+
+[[recipe]]
+title = "OpenAI Agent Retrieval"
+notebook = "notebooks/agent/openai_agent_retrieval.ipynb"
+tags = ["Agent", "Integrations"]
+description = "Implement retrieval-augmented generation with OpenAI agents"
+language = "py"
+
+[[recipe]]
+title = "OpenAI Agent with Query Engine"
+notebook = "notebooks/agent/openai_agent_with_query_engine.ipynb"
+tags = ["Agent", "Integrations"]
+description = "Combine OpenAI agents with query engines for enhanced information retrieval"
+language = "py"
+
+[[recipe]]
+title = "ReAct Agent"
+notebook = "notebooks/agent/react_agent.ipynb"
+tags = ["Agent"]
+description = "Implement reasoning and acting agents with step-by-step problem solving"
+language = "py"
+
+[[recipe]]
+title = "ReAct Agent with Query Engine"
+notebook = "notebooks/agent/react_agent_with_query_engine.ipynb"
+tags = ["Agent"]
+description = "Combine ReAct agents with query engines for structured reasoning"
+language = "py"
+
+[[recipe]]
+title = "Return Direct Agent"
+notebook = "notebooks/agent/return_direct_agent.ipynb"
+tags = ["Agent"]
+description = "Build agents that return direct responses without intermediate steps"
+language = "py"
+
+[[recipe]]
+title = "Agents as Tools"
+notebook = "notebooks/agent/agents_as_tools.ipynb"
+tags = ["Agent"]
+description = "Use agents as tools within other agent workflows"
+language = "py"
+
+[[recipe]]
+title = "Multi-Agent Workflow with Weaviate"
+notebook = "notebooks/agent/multi_agent_workflow_with_weaviate_queryagent.ipynb"
+tags = ["Agent", "Integrations"]
+description = "Build multi-agent systems with Weaviate vector database integration"
+language = "py"
+
+[[recipe]]
+title = "Multi-Document Agents"
+notebook = "notebooks/agent/multi_document_agents-v1.ipynb"
+tags = ["Agent"]
+description = "Create agents that can process and reason across multiple documents"
+language = "py"
+
+[[recipe]]
+title = "SEC Chatbot"
+notebook = "notebooks/agent/Chatbot_SEC.ipynb"
+tags = ["Agent"]
+description = "Build a specialized chatbot for SEC document analysis and queries"
+language = "py"
+
+[[recipe]]
+title = "Chat Memory Buffer"
+notebook = "notebooks/agent/memory/chat_memory_buffer.ipynb"
+tags = ["Agent", "Memory"]
+description = "Implement conversation memory using buffer storage"
+language = "py"
+
+[[recipe]]
+title = "Composable Memory"
+notebook = "notebooks/agent/memory/composable_memory.ipynb"
+tags = ["Agent", "Memory"]
+description = "Build flexible memory systems that can be composed and combined"
+language = "py"
+
+[[recipe]]
+title = "Summary Memory Buffer"
+notebook = "notebooks/agent/memory/summary_memory_buffer.ipynb"
+tags = ["Agent", "Memory"]
+description = "Use summarization techniques for efficient conversation memory"
+language = "py"
+
+[[recipe]]
+title = "Vector Memory"
+notebook = "notebooks/agent/memory/vector_memory.ipynb"
+tags = ["Agent", "Memory"]
+description = "Implement semantic memory using vector embeddings"
+language = "py"

@@ -102,6 +102,7 @@ title: "{title}"
 featured: {notebook_info.get("featured", False)}
 experimental: {notebook_info.get("experimental", False)}
 tags: {notebook_info.get("tags", [])}
+language: {notebook_info.get("language", None)}
 ---
 """
     # Remove the original header and add frontmatter
@@ -264,20 +265,23 @@ def convert_notebooks(index_data):
     colab_base_url = index_data["config"]["colab"]
     notebooks = []
     for i, recipe_data in enumerate(recipes):
-        notebook_info = {
-            "file": Path(recipe_data["notebook"]),
-            "title": recipe_data["title"],
-            "colab": f"{colab_base_url.rstrip('/')}/{recipe_data["notebook"]}",
-            "featured": recipe_data.get("featured", False),
-            "experimental": recipe_data.get("experimental", False),
-            "tags": recipe_data.get("tags", []),
-            "relative_repo_path": recipe_data["notebook"],  # Pass relative path for image fixing
-        }
-        notebook_path = Path(recipe_data["notebook"])
-        notebooks.append({
-            "notebook_path": notebook_path,
-            "notebook_info": notebook_info
-        })
+        if recipe_data.get("notebook") is not None:
+            notebook_info = {
+                "file": Path(recipe_data["notebook"]),
+                "title": recipe_data["title"],
+                "colab": f"{colab_base_url.rstrip('/')}/{recipe_data["notebook"]}",
+                "featured": recipe_data.get("featured", False),
+                "experimental": recipe_data.get("experimental", False),
+                "tags": recipe_data.get("tags", []),
+                "relative_repo_path": recipe_data["notebook"],  # Pass relative path for image fixing
+            }
+            if recipe_data.get("language"):
+                notebook_info["language"] = recipe_data["language"]
+            notebook_path = Path(recipe_data["notebook"])
+            notebooks.append({
+                "notebook_path": notebook_path,
+                "notebook_info": notebook_info
+            })
     notebook_paths = [notebook['notebook_path'] for notebook in notebooks ]
     total_notebooks = len(notebook_paths)
 

@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cookbooks Documentation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            background: white;
+            padding: 40px 20px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #1a1a1a;
+        }
+        
+        .page-subtitle {
+            font-size: 1.1rem;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .controls-section {
+            background: white;
+            padding: 30px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .search-filters-row {
+            display: flex;
+            gap: 20px;
+            align-items: flex-end;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+        
+        .search-container {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .filter-group {
+            min-width: 150px;
+        }
+        
+        .label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            color: #374151;
+        }
+        
+        .search-input, .filter-select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e5e7eb;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: border-color 0.2s;
+        }
+        
+        .search-input:focus, .filter-select:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+        
+        .active-filters {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        
+        .filter-tag {
+            background: #3b82f6;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .filter-tag .remove {
+            cursor: pointer;
+            font-weight: bold;
+            padding: 2px;
+        }
+        
+        .clear-all {
+            background: #ef4444;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+        
+        .results-info {
+            background: #f0f9ff;
+            border: 1px solid #0ea5e9;
+            border-left: 4px solid #0ea5e9;
+            padding: 12px 20px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            color: #0c4a6e;
+        }
+        
+        .cookbooks-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 24px;
+        }
+        
+        .cookbook-card {
+            background: white;
+            border-radius: 8px;
+            padding: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: all 0.2s;
+            position: relative;
+            border: 2px solid transparent;
+        }
+        
+        .cookbook-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+            border-color: #3b82f6;
+        }
+        
+        .cookbook-card.featured {
+            border-color: #f59e0b;
+            background: linear-gradient(135deg, #fefbf3 0%, #ffffff 100%);
+        }
+        
+        .cookbook-card.experimental {
+            border-color: #8b5cf6;
+            background: linear-gradient(135deg, #faf5ff 0%, #ffffff 100%);
+        }
+        
+        .featured-badge, .experimental-badge {
+            position: absolute;
+            top: -8px;
+            right: 16px;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        .featured-badge {
+            background: #f59e0b;
+            color: white;
+        }
+        
+        .experimental-badge {
+            background: #8b5cf6;
+            color: white;
+        }
+        
+        .cookbook-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #1a1a1a;
+        }
+        
+        .cookbook-description {
+            color: #6b7280;
+            margin-bottom: 16px;
+            line-height: 1.5;
+        }
+        
+        .cookbook-tags {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            margin-bottom: 16px;
+        }
+        
+        .tag {
+            background: #f3f4f6;
+            color: #374151;
+            padding: 4px 10px;
+            border-radius: 16px;
+            font-size: 0.8rem;
+            border: 1px solid #e5e7eb;
+        }
+        
+        .cookbook-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .cookbook-link {
+            color: #3b82f6;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+        
+        .cookbook-link:hover {
+            text-decoration: underline;
+        }
+        
+        .language-badge {
+            background: #1f2937;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #6b7280;
+        }
+        
+        .empty-state-icon {
+            font-size: 3rem;
+            margin-bottom: 16px;
+        }
+        
+        @media (max-width: 768px) {
+            .search-filters-row {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .cookbooks-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .cookbook-card {
+                padding: 20px;
+            }
+            
+            .page-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1 class="page-title">Cookbooks Documentation</h1>
+            <p class="page-subtitle">Explore our collection of practical guides and tutorials for building AI applications</p>
+        </div>
+
+        <!-- Search and Filter Controls -->
+        <div class="controls-section">
+            <div class="search-filters-row">
+                <div class="search-container">
+                    <label class="label" for="search">Search Cookbooks</label>
+                    <input type="text" id="search" class="search-input" placeholder="Search by title, description, or tags...">
+                </div>
+                
+                <div class="filter-group">
+                    <label class="label" for="tag-filter">Filter by Tag</label>
+                    <select id="tag-filter" class="filter-select">
+                        <option value="">All Tags</option>
+                        <option value="Agent">Agent</option><option value="Integrations">Integrations</option><option value="LlamaParse">LlamaParse</option><option value="Memory">Memory</option><option value="Websearch">Websearch</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label class="label" for="language-filter">Language</label>
+                    <select id="language-filter" class="filter-select">
+                        <option value="">All Languages</option>
+                        <option value="py">PY</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label class="label" for="sort-select">Sort By</label>
+                    <select id="sort-select" class="filter-select">
+                        <option value="title">Title A-Z</option>
+                        <option value="featured">Featured First</option>
+                        <option value="tags">By Tag</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="active-filters" id="active-filters">
+                <!-- Active filters will be populated by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Results Info -->
+        <div class="results-info" id="results-info">
+            Loading cookbooks...
+        </div>
+
+        <!-- Cookbooks Grid -->
+        <div class="cookbooks-grid" id="cookbooks-grid">
+            <!-- Cookbook cards will be populated by JavaScript -->
+        </div>
+        
+        <!-- Empty State -->
+        <div class="empty-state" id="empty-state" style="display: none;">
+            <div class="empty-state-icon">📚</div>
+            <h3>No cookbooks found</h3>
+            <p>Try adjusting your search or filter criteria</p>
+        </div>
+    </div>
+
+    <script>
+        // Cookbook data from TOML
+        const cookbooks = [{"title": "Agent Workflow + Research Assistant using AgentQL", "description": "Build a research assistant using AgentWorlflow and websearch tools", "tags": ["Agent", "Websearch", "Integrations"], "language": "py", "url": "https://colab.research.google.com/github/run-llama/cookbooks-demo/blob/main/notebooks/agent/agent_workflow_research_assistant.ipynb", "featured": true, "experimental": true}, {"title": "Custom Planning Multi-Agent System", "description": "Build a research agent that writes and refines reports with a multi-agent structure.", "tags": ["Agent"], "language": "py", "url": "https://colab.research.google.com/github/run-llama/cookbooks-demo/blob/main/notebooks/agent/custom_multi_agent.ipynb", "featured": true, "experimental": false}, {"title": "Parsing Documents with Instructions", "description": "Parse documents with additional instructions", "tags": ["LlamaParse"], "language": "py", "url": "https://github.com/run-llama/llama_cloud_services/blob/main/examples/parse/parsing_instructions/parsing_instructions.ipynb", "featured": true, "experimental": false}, {"title": "Agent Builder", "description": "Create and configure agents with custom tools and capabilities", "tags": ["Agent"], "language": "py", "url": "https://colab.research.google.com/github/run-llama/cookbooks-demo/blob/main/notebooks/agent/agent_builder.ipynb", "featured": false, "experimental": false}, {"title": "Basic Agent Workflow", "description": "Get started with basic agent workflows and tool usage", "tags": ["Agent"], "language": "py", "url": "https://colab.research.google.com/github/run-llama/cookbooks-demo/blob/main/notebooks/agent/agent_workflow_basic.ipynb", "featured": false, "experimental": false}, {"title": "Multi-Agent Workflow", "description": "Build complex workflows with multiple collaborating agents", "tags": ["Agent"], "language": "py", "url": "https://colab.research.google.com/github/run-llama/cookbooks-demo/blob/main/notebooks/agent/agent_workflow_multi.ipynb", "featured": false, "experimental": false}, {"title": "Anthropic Claude Agent", "description": "Use Anthropic's Claude model as an agent with tools", "tags": ["Agent", "Integrations"], "language": "py", "url": "https://colab.research.google.com/github/run-llama/cookbooks-demo/blob/main/notebooks/agent/anthropic_agent.ipynb", "featured": false, "experimental": false}, {"title": "AWS Bedrock Converse Agent", "description": "Integrate AWS Bedrock Converse with agent workflows", "tags": ["Agent", "Integrations"], "language": "py", "url": "https://colab.research.google.com/github/run-llama/cookbooks-demo/blob/main/notebooks/agent/bedrock_converse_agent.ipynb", "featured": false, "experimental": false}, {"title": "Code Act Agent", "description": "Build agents that can write and execute code", "tags": ["Agent"], "language": "py", "url": "https://colab.research.google.com/github/run-llama/cookbooks-demo/blob/main/notebooks/agent/code_act_agent.ipynb", "featured": false, "experimental": false}, {"title": "From Scratch Code Act Agent", "description": "Create a code-writing agent from the ground up", "tags": ["Agent"], "language": "py", "url": "https://colab.research.google.com/github/run-llama/cookbooks-demo/blob/main/notebooks/agent/from_scratch_code_act_agent.ipynb", "featured": false, "experimental": false}, {"title": "Mistral Agent", "description": "Use Mistral AI models as agents with tool integration", "tags": ["Agent", "Integrations"], "language": "py", "url": "https://colab.research.google.com/github/run-llama/cookbooks-demo/blob/main/notebooks/agent/mistral_agent.ipynb", "featured": false, "experimental": false}, {"title": "NVIDIA Agent", "description": "Integrate NVIDIA AI models with agent workflows", "tags": ["Agent", "Integrations"], "language": "py", "url": "https://colab.research.google.com/github/run-llama/cookbooks-demo/blob/main/notebooks/agent/nvidia_agent.ipynb", "featured": false, "experimental": false}, {"title": "NVIDIA Document Research Assistant", "description": "Create a document research assistant for blog content generation", "tags": ["Agent", "Integrations"], "language": "py", "url": "https://colab.research.google.com/github/run-llama/cookbooks-demo/blob/main/notebooks/agent/nvidia_document_research_assistant_for_blog_creation.ipynb", "featured": false, "experimental": false}, {"title": "NVIDIA Sub-Question Query Engine", "description": "Build a query engine that breaks complex questions into sub-questions", "tags": ["Agent", "Integrations"], "language": "py", "url": "https://colab.research.google.com/github/run-llama/cookbooks-demo/blob/main/notebooks/agent/nvidia_sub_question_query_engine.ipynb", "featured": false, "experimental": false}, {"title": "OpenAI Agent with Context Retrieval", "description": "Use OpenAI agents with advanced context retrieval capabilities", "tags": ["Agent", "Integrations"], "language": "py", "url": "https://colab.research.google.com/github/run-llama/cookbooks-demo/blob/main/notebooks/agent/openai_agent_context_retrieval.ipynb", "featured": false, "experimental": false}, {"title": "OpenAI Agent with Lengthy Tools", "description": "Handle complex tools and long-running operations with OpenAI agents", "tags": ["Agent", "Integrations"], "language": "py", "url": "https://colab.research.google.com/github/run-llama/cookbooks-demo/blob/main/notebooks/agent/openai_agent_lengthy_tools.ipynb", "featured": false, "experimental": false}, {"title": "OpenAI Agent Query Cookbook", "description": "Comprehensive guide to OpenAI agent query patterns and best practices", "tags": ["Agent", "Integrations"], "language": "py", "url": "https://colab.research.google.com/github/run-llama/cookbooks-demo/blob/main/notebooks/agent/openai_agent_query_cookbook.ipynb", "featured": false, "experimental": false}, {"title": "OpenAI Agent Retrieval", "description": "Implement retrieval-augmented generation with OpenAI agents", "tags": ["Agent", "Integrations"], "language": "py", "url": "https://colab.research.google.com/github/run-llama/cookbooks-demo/blob/main/notebooks/agent/openai_agent_retrieval.ipynb", "featured": false, "experimental": false}, {"title": "OpenAI Agent with Query Engine", "description": "Combine OpenAI agents with query engines for enhanced information retrieval", "tags": ["Agent", "Integrations"], "language": "py", "url": "https://colab.research.google.com/github/run-llama/cookbooks-demo/blob/main/notebooks/agent/openai_agent_with_query_engine.ipynb", "featured": false, "experimental": false}, {"title": "ReAct Agent", "description": "Implement reasoning and acting agents with step-by-step problem solving", "tags": ["Agent"], "language": "py", "url": "https://colab.research.google.com/github/run-llama/cookbooks-demo/blob/main/notebooks/agent/react_agent.ipynb", "featured": false, "experimental": false}, {"title": "ReAct Agent with Query Engine", "description": "Combine ReAct agents with query engines for structured reasoning", "tags": ["Agent"], "language": "py", "url": "https://colab.research.google.com/github/run-llama/cookbooks-demo/blob/main/notebooks/agent/react_agent_with_query_engine.ipynb", "featured": false, "experimental": false}, {"title": "Return Direct Agent", "description": "Build agents that return direct responses without intermediate steps", "tags": ["Agent"], "language": "py", "url": "https://colab.research.google.com/github/run-llama/cookbooks-demo/blob/main/notebooks/agent/return_direct_agent.ipynb", "featured": false, "experimental": false}, {"title": "Agents as Tools", "description": "Use agents as tools within other agent workflows", "tags": ["Agent"], "language": "py", "url": "https://colab.research.google.com/github/run-llama/cookbooks-demo/blob/main/notebooks/agent/agents_as_tools.ipynb", "featured": false, "experimental": false}, {"title": "Multi-Agent Workflow with Weaviate", "description": "Build multi-agent systems with Weaviate vector database integration", "tags": ["Agent", "Integrations"], "language": "py", "url": "https://colab.research.google.com/github/run-llama/cookbooks-demo/blob/main/notebooks/agent/multi_agent_workflow_with_weaviate_queryagent.ipynb", "featured": false, "experimental": false}, {"title": "Multi-Document Agents", "description": "Create agents that can process and reason across multiple documents", "tags": ["Agent"], "language": "py", "url": "https://colab.research.google.com/github/run-llama/cookbooks-demo/blob/main/notebooks/agent/multi_document_agents-v1.ipynb", "featured": false, "experimental": false}, {"title": "SEC Chatbot", "description": "Build a specialized chatbot for SEC document analysis and queries", "tags": ["Agent"], "language": "py", "url": "https://colab.research.google.com/github/run-llama/cookbooks-demo/blob/main/notebooks/agent/Chatbot_SEC.ipynb", "featured": false, "experimental": false}, {"title": "Chat Memory Buffer", "description": "Implement conversation memory using buffer storage", "tags": ["Agent", "Memory"], "language": "py", "url": "https://colab.research.google.com/github/run-llama/cookbooks-demo/blob/main/notebooks/agent/memory/chat_memory_buffer.ipynb", "featured": false, "experimental": false}, {"title": "Composable Memory", "description": "Build flexible memory systems that can be composed and combined", "tags": ["Agent", "Memory"], "language": "py", "url": "https://colab.research.google.com/github/run-llama/cookbooks-demo/blob/main/notebooks/agent/memory/composable_memory.ipynb", "featured": false, "experimental": false}, {"title": "Summary Memory Buffer", "description": "Use summarization techniques for efficient conversation memory", "tags": ["Agent", "Memory"], "language": "py", "url": "https://colab.research.google.com/github/run-llama/cookbooks-demo/blob/main/notebooks/agent/memory/summary_memory_buffer.ipynb", "featured": false, "experimental": false}, {"title": "Vector Memory", "description": "Implement semantic memory using vector embeddings", "tags": ["Agent", "Memory"], "language": "py", "url": "https://colab.research.google.com/github/run-llama/cookbooks-demo/blob/main/notebooks/agent/memory/vector_memory.ipynb", "featured": false, "experimental": false}];
+        let filteredCookbooks = [...cookbooks];
+        
+        // DOM elements
+        const searchInput = document.getElementById('search');
+        const tagFilter = document.getElementById('tag-filter');
+        const languageFilter = document.getElementById('language-filter');
+        const sortSelect = document.getElementById('sort-select');
+        const resultsInfo = document.getElementById('results-info');
+        const cookbooksGrid = document.getElementById('cookbooks-grid');
+        const emptyState = document.getElementById('empty-state');
+        const activeFiltersContainer = document.getElementById('active-filters');
+        
+        function createCookbookCard(cookbook) {
+            const badgeHtml = cookbook.featured 
+                ? '<div class="featured-badge">Featured</div>' 
+                : cookbook.experimental 
+                    ? '<div class="experimental-badge">Experimental</div>'
+                    : '';
+            
+            const cardClass = cookbook.featured 
+                ? 'cookbook-card featured' 
+                : cookbook.experimental 
+                    ? 'cookbook-card experimental'
+                    : 'cookbook-card';
+            
+            const tagsHtml = cookbook.tags.map(tag => 
+                `<span class="tag">${tag}</span>`
+            ).join('');
+            
+            const languageBadge = cookbook.language 
+                ? `<span class="language-badge">${cookbook.language}</span>`
+                : '';
+            
+            return `
+                <div class="${cardClass}">
+                    ${badgeHtml}
+                    <div class="cookbook-title">${cookbook.title}</div>
+                    <div class="cookbook-description">${cookbook.description}</div>
+                    <div class="cookbook-tags">${tagsHtml}</div>
+                    <div class="cookbook-footer">
+                        <a href="${cookbook.url}" class="cookbook-link" target="_blank">
+                            Open Cookbook →
+                        </a>
+                        ${languageBadge}
+                    </div>
+                </div>
+            `;
+        }
+        
+        function updateActiveFilters() {
+            const activeFilters = [];
+            
+            if (tagFilter.value) {
+                activeFilters.push({
+                    type: 'tag',
+                    value: tagFilter.value,
+                    label: `Tag: ${tagFilter.value}`
+                });
+            }
+            
+            if (languageFilter.value) {
+                activeFilters.push({
+                    type: 'language',
+                    value: languageFilter.value,
+                    label: `Language: ${languageFilter.value.toUpperCase()}`
+                });
+            }
+            
+            if (searchInput.value.trim()) {
+                activeFilters.push({
+                    type: 'search',
+                    value: searchInput.value,
+                    label: `Search: "${searchInput.value}"`
+                });
+            }
+            
+            const filtersHtml = activeFilters.map(filter => `
+                <div class="filter-tag">
+                    ${filter.label}
+                    <span class="remove" onclick="removeFilter('${filter.type}', '${filter.value}')">×</span>
+                </div>
+            `).join('');
+            
+            if (activeFilters.length > 0) {
+                activeFiltersContainer.innerHTML = filtersHtml + 
+                    '<button class="clear-all" onclick="clearAllFilters()">Clear All</button>';
+            } else {
+                activeFiltersContainer.innerHTML = '';
+            }
+        }
+        
+        function removeFilter(type, value) {
+            if (type === 'tag') {
+                tagFilter.value = '';
+            } else if (type === 'language') {
+                languageFilter.value = '';
+            } else if (type === 'search') {
+                searchInput.value = '';
+            }
+            filterAndRender();
+        }
+        
+        function clearAllFilters() {
+            searchInput.value = '';
+            tagFilter.value = '';
+            languageFilter.value = '';
+            sortSelect.value = 'title';
+            filterAndRender();
+        }
+        
+        function filterAndRender() {
+            const searchTerm = searchInput.value.toLowerCase().trim();
+            const selectedTag = tagFilter.value;
+            const selectedLanguage = languageFilter.value;
+            const sortBy = sortSelect.value;
+            
+            // Filter cookbooks
+            filteredCookbooks = cookbooks.filter(cookbook => {
+                // Search filter
+                const matchesSearch = !searchTerm || 
+                    cookbook.title.toLowerCase().includes(searchTerm) ||
+                    cookbook.description.toLowerCase().includes(searchTerm) ||
+                    cookbook.tags.some(tag => tag.toLowerCase().includes(searchTerm));
+                
+                // Tag filter
+                const matchesTag = !selectedTag || cookbook.tags.includes(selectedTag);
+                
+                // Language filter
+                const matchesLanguage = !selectedLanguage || cookbook.language === selectedLanguage;
+                
+                return matchesSearch && matchesTag && matchesLanguage;
+            });
+            
+            // Sort cookbooks
+            filteredCookbooks.sort((a, b) => {
+                if (sortBy === 'featured') {
+                    if (a.featured && !b.featured) return -1;
+                    if (!a.featured && b.featured) return 1;
+                    if (a.experimental && !b.experimental) return -1;
+                    if (!a.experimental && b.experimental) return 1;
+                }
+                if (sortBy === 'tags') {
+                    return a.tags[0]?.localeCompare(b.tags[0] || '') || 0;
+                }
+                return a.title.localeCompare(b.title);
+            });
+            
+            // Update results info
+            resultsInfo.textContent = `Showing ${filteredCookbooks.length} of ${cookbooks.length} cookbooks`;
+            
+            // Update active filters display
+            updateActiveFilters();
+            
+            // Render results
+            if (filteredCookbooks.length === 0) {
+                cookbooksGrid.style.display = 'none';
+                emptyState.style.display = 'block';
+            } else {
+                cookbooksGrid.style.display = 'grid';
+                emptyState.style.display = 'none';
+                cookbooksGrid.innerHTML = filteredCookbooks.map(createCookbookCard).join('');
+            }
+        }
+        
+        // Event listeners
+        searchInput.addEventListener('input', filterAndRender);
+        tagFilter.addEventListener('change', filterAndRender);
+        languageFilter.addEventListener('change', filterAndRender);
+        sortSelect.addEventListener('change', filterAndRender);
+        
+        // Initialize page
+        filterAndRender();
+        
+        // Add some interactivity hints
+        console.log('Cookbook Documentation Page Loaded');
+        console.log(`Total cookbooks: ${cookbooks.length}`);
+        console.log(`Available tags: Agent, Integrations, LlamaParse, Memory, Websearch`);
+    </script>
+</body>
+</html>

@@ -1,11 +1,12 @@
 ---
 layout: recipe
-colab: https://colab.research.google.com/github/TuanaCelik/cookbooks-demo/blob/main/notebooks/agent/agent_workflow_research_assistant.ipynb
+colab: https://colab.research.google.com/github/run-llama/cookbooks-demo/blob/main/notebooks/agent/agent_workflow_research_assistant.ipynb
 toc: True
 title: "Agent Workflow + Research Assistant using AgentQL"
-featured: False
+featured: True
 experimental: True
 tags: ['Agent', 'Websearch', 'Integrations']
+language: py
 ---
 <a href="https://colab.research.google.com/github/run-llama/llama_index/blob/main/docs/docs/examples/agent/agent_workflow_research_assistant.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
 
