@@ -93,18 +93,26 @@ def add_frontmatter(notebook_info: dict, md_content: str) -> str:
     title = header_match.group(1)
     
     # Create frontmatter
-    frontmatter =  f"""\
----
-layout: recipe
-colab: {notebook_info.get("colab")}
-toc: True
-title: "{title}"
-featured: {notebook_info.get("featured", False)}
-experimental: {notebook_info.get("experimental", False)}
-tags: {notebook_info.get("tags", [])}
-language: {notebook_info.get("language", None)}
----
-"""
+    frontmatter_lines = [
+        "---",
+        "layout: recipe",
+        f"colab: {notebook_info.get('colab')}",
+        "toc: True",
+        f'title: "{title}"',
+        f"featured: {notebook_info.get('featured', False)}",
+        f"experimental: {notebook_info.get('experimental', False)}",
+        f"tags: {notebook_info.get('tags', [])}",
+        f"language: {notebook_info.get('language', None)}"
+    ]
+    
+    # Add optional fields if they exist
+    if notebook_info.get("slug"):
+        frontmatter_lines.append(f"slug: {notebook_info['slug']}")
+    if notebook_info.get("location"):
+        frontmatter_lines.append(f"location: {notebook_info['location']}")
+    
+    frontmatter_lines.append("---")
+    frontmatter = "\n".join(frontmatter_lines) + "\n"
     # Remove the original header and add frontmatter
     return frontmatter + md_content[header_match.end():].lstrip()
 
@@ -135,12 +143,22 @@ def convert_single_notebook(notebook: dict, source_dir: Path, dest_dir: Path) ->
         # Calculate relative path from source directory
         rel_path = notebook_path.relative_to(source_dir)
         print(rel_path)
-        # Create corresponding destination directory
-        dest_subdir = dest_dir / rel_path.parent
+        
+        # Determine destination directory based on location field
+        if notebook_info.get("location"):
+            dest_subdir = dest_dir / notebook_info["location"]
+        else:
+            dest_subdir = dest_dir / rel_path.parent
+        
         dest_subdir.mkdir(parents=True, exist_ok=True)
         
-        # Generate destination markdown file path
-        dest_file = dest_subdir / f"{rel_path.stem}.md"
+        # Generate destination markdown file path using slug if available
+        if notebook_info.get("slug"):
+            filename = f"{notebook_info['slug']}.md"
+        else:
+            filename = f"{rel_path.stem}.md"
+        
+        dest_file = dest_subdir / filename
         
         # Initialize the markdown exporter
         md_exporter = MarkdownExporter()
@@ -277,6 +295,10 @@ def convert_notebooks(index_data):
             }
             if recipe_data.get("language"):
                 notebook_info["language"] = recipe_data["language"]
+            if recipe_data.get("slug"):
+                notebook_info["slug"] = recipe_data["slug"]
+            if recipe_data.get("location"):
+                notebook_info["location"] = recipe_data["location"]
             notebook_path = Path(recipe_data["notebook"])
             notebooks.append({
                 "notebook_path": notebook_path,
@@ -306,10 +328,18 @@ def convert_notebooks(index_data):
                     print(f"\nError converting {notebook_path}: {error}")
     
     # Copy images from each notebook directory
-    for notebook_path in notebook_paths:
+    for notebook in notebooks:
+        notebook_path = notebook["notebook_path"]
+        notebook_info = notebook["notebook_info"]
         source_subdir = notebook_path.parent
-        rel_path = source_subdir.relative_to(source_dir)
-        dest_subdir = temp_dir / rel_path
+        
+        # Determine destination directory based on location field
+        if notebook_info.get("location"):
+            dest_subdir = temp_dir / notebook_info["location"]
+        else:
+            rel_path = source_subdir.relative_to(source_dir)
+            dest_subdir = temp_dir / rel_path
+        
         copy_directory_images(source_subdir, dest_subdir)
     
     # Copy converted files to final destination

@@ -19,6 +19,8 @@ tags = ["Agent"]
 description = "Build a research agent that writes and refines reports with a multi-agent structure."
 featured = true
 language = "py"
+slug = "legacy_name"
+location = "pydocs/examples/agent"
 
 [[recipe]]
 title = "Parsing Documents with Instructions"
